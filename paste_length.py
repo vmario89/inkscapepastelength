@@ -161,7 +161,10 @@ class PasteLengthEffect(inkex.Effect):
                 
                 self.scaleCubicSuper(cspath, scaleFactor = scale * (srclen / curveLen), \
                 scaleFrom = scaleFrom)
-                selections[key].set('d', formatPath(cspath))
+                try: #we wrap this in try-except because if the elements are within groups it will cause errors
+                    selections[key].set('d', CubicSuperPath(cspath))
+                except:
+                    pass
         else:
             inkex.errormsg(_("Please select at least two paths, with the path whose \
             length is to be copied at the top. You may have to convert the shape \
